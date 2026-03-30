@@ -37,5 +37,7 @@
 
         box-sizing: border-box;
         padding: 64px 16px;
+
+        margin-top: 128px;
     }
 </style>

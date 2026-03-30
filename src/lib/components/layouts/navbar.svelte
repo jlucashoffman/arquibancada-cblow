@@ -13,16 +13,15 @@
         ["histórico de partidas", ""]
     ]
 
-    let navElement: HTMLElement
+    let isShrunk = $state(false)
+
+    const handleScroll = () => isShrunk = window.scrollY > 64
 
     onMount(() => {
-        window.addEventListener("scroll", () => {
-            if(window.scrollY >= 64) {
-                navElement.classList.add("nav-small")
-            } else {
-                navElement.classList.remove("nav-small")
-            }
-        })
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
     })
 </script>
 
@@ -30,7 +29,7 @@
     <li><a class="navbar_link label_text" href={l[1]}>{l[0]}</a></li>
 {/snippet}
 
-<nav bind:this={navElement}>
+<nav class:nav-small={isShrunk}>
     <div class="background"></div>
     <div class="content_wrapper">   
         <MenuNavButton />
@@ -53,7 +52,7 @@
         width: 100%;
         height: 128px;
 
-        position: sticky;
+        position: fixed;
         top: 0;
         z-index: 10;
 
