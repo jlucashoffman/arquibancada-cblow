@@ -55,11 +55,14 @@
 
             position: relative;
 
+            box-sizing: border-box;
+            padding: 16px;
+
             & :is(h1, :global(.watch_button)) {
                 position: absolute;
 
-                &:is(h1) { left: 0; }
-                &:global(.watch_button) { right: 0; }
+                &:is(h1) { left: 16px; }
+                &:global(.watch_button) { right: 16px; }
             }
 
             & #navbar_link_group {
