@@ -1,5 +1,9 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import WatchButton from "../watchButton.svelte";
+    import { livestreamObserver } from "$lib/runes.svelte";
+
+    
 
 </script>
 <section id="section_hero">
@@ -16,7 +20,7 @@
             </div>
             <div id="livestream_box_effects"></div>
             <div id="livestream_overflow"></div>
-        </div>
+        </div>    
         <WatchButton />
     </div>
 </section>

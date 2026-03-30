@@ -5,13 +5,23 @@
     import MatchKeying from "$lib/components/layouts/matchKeying.svelte";
     import Navbar from "$lib/components/layouts/navbar.svelte";
     import Participants from "$lib/components/layouts/participants.svelte";
+    import { livestreamObserver } from "$lib/runes.svelte";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        livestreamObserver.loopObserver();
+
+        return(() => livestreamObserver.clearLoop());
+    })
 
 </script>
 
 <Navbar />
 
 <main>
+    {#if livestreamObserver.inLive}
     <HeroLivePreview />
+    {/if}
     <Participants />
     <Crowds />
     <MatchKeying />
