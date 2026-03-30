@@ -206,6 +206,10 @@ let div_teams:HTMLDivElement;
                 grid-template-columns: repeat(2, [col-start] 1fr);
                 width: 100%;
                 gap: 16px;
+
+                @media screen and (max-width: 600px) {
+                    grid-template-columns: repeat(1, [col-start] 1fr);
+                }
             }
         }
     }
