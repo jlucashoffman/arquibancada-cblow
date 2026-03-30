@@ -255,6 +255,17 @@ let div_teams:HTMLDivElement;
             gap: 8px;
             align-items: center;
 
+            box-sizing: border-box;
+            padding: 4px;
+            border-radius: 4px;
+
+            transition: background-color .3s;
+
+            &:hover {
+                background-color: #ffffff16;
+                background-color: oklch(1 0 0/0.08);
+            }
+
             & img {
                 width: 24px;
             }
