@@ -21,7 +21,6 @@ Interessado em um jogador específico? Com a **Arquibancada** você poderá acom
 
 Aqui é uma lista para eu não me perder no que fazer
 
-- [ ] Adicionar responsividade ~~antes q eu me perca em meio a tanta classe css~~
 - [ ] Criar banco de dados e importar os jogadores de lá, mantendo assim a tabela atualizada e controle de histórico
 - [ ] Registrar as cartas no banco de dados (sistema cartas e decks, caso haja modificação)
 - [ ] Sistema de histórico de partidas (times e cartas podem variar, atentar a isto)
@@ -31,3 +30,4 @@ Aqui é uma lista para eu não me perder no que fazer
 - [ ] Chaveamento
 - [ ] Adicionar pódio
 - [ ] Filtragem por edição
+- [ x ] ~~Adicionar responsividade antes q eu me perca em meio a tanta classe css~~
