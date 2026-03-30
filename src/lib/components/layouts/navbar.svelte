@@ -1,8 +1,8 @@
 <script lang="ts">
     import { navManager } from '$lib/runes.svelte';
+    import { onMount } from 'svelte';
     import MenuNavButton from '../menuNavButton.svelte';
     import WatchButton from '../watchButton.svelte';
-
 
     type LinkObject = [label: string, url: string]
 
@@ -12,13 +12,25 @@
         ["chaveamento", ""],
         ["histórico de partidas", ""]
     ]
+
+    let navElement: HTMLElement
+
+    onMount(() => {
+        window.addEventListener("scroll", () => {
+            if(window.scrollY >= 64) {
+                navElement.classList.add("nav-small")
+            } else {
+                navElement.classList.remove("nav-small")
+            }
+        })
+    })
 </script>
 
 {#snippet link(l: LinkObject)}
     <li><a class="navbar_link label_text" href={l[1]}>{l[0]}</a></li>
 {/snippet}
 
-<nav>
+<nav bind:this={navElement}>
     <div class="background"></div>
     <div class="content_wrapper">   
         <MenuNavButton />
@@ -42,7 +54,26 @@
         height: 128px;
 
         position: sticky;
+        top: 0;
         z-index: 10;
+
+        transition: height .3s;
+
+        &:is(:global(.nav-small)) {
+            height: calc(64px + 16px);
+
+            @media screen and (max-width: 964px) {
+                & #navbar_link_group.navbar-open { 
+                    bottom: calc(-48px - 8px) !important;
+                }
+            }
+
+            @media screen and (max-width: 600px) {
+                & #navbar_link_group.navbar-open { 
+                    bottom: -8px !important;
+                }
+            }
+        }
 
         & .background {
             position: absolute;
@@ -79,7 +110,10 @@
 
             & #navbar_link_group {
                 display: flex;
+                justify-content: center;
                 gap: 16px;
+                border-radius: 16px;
+                backdrop-filter: blur(32px);
 
                 &:has(.navbar_link:hover) .navbar_link:not(:hover) {
                     opacity: 0.4;
@@ -94,11 +128,13 @@
                 & :is(h1, :global(.watch_button)) { position: static; }
                 & h1 { margin-right: auto; }
                 & #navbar_link_group { 
+                    justify-content: flex-start;
                     position: absolute; 
                     transform: translateY(-50%);
                     bottom: 0px;
                     left: 16px;
                     z-index: -1;
+                    width: calc(100% - 32px);
 
                     transition-property: bottom;
                     transition-duration: .3s;
