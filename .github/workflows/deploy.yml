@@ -1,4 +1,4 @@
-name: Deploy Arquibancada CBLOW
+name: Deploy Frontend
 
 on:
   push:
@@ -12,23 +12,30 @@ jobs:
       - name: Checkout Código
         uses: actions/checkout@v3
 
+      # 1. Instala o pnpm antes de tudo
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # Ou a versão que você usa localmente
+
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'pnpm' # Agora ele vai buscar o pnpm-lock.yaml corretamente
 
-      - name: Instalar Dependências e Build
-        run: |
-          npm install
-          npm run build
+      - name: Instalar Dependências
+        run: pnpm install
+
+      - name: Gerar Build
+        run: pnpm run build
 
       - name: Enviar para a VPS (Rsync)
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-avz --delete"
-          SOURCE: "build/"
+          SOURCE: "build/" 
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/var/www/arquibancada-cblow/"
