@@ -224,10 +224,18 @@ let div_teams:HTMLDivElement;
     padding: 16px;
     width: 100%;
 
+    @media screen and (max-width: 964px) {
+        padding: 8px 16px;
+    }
+
     & img {
         display: inline-block;
         border-radius: 50%;
         width: 48px;
+
+        @media screen and (max-width: 964px) {
+            width: 32px;
+        }
     }
 
     & p {
