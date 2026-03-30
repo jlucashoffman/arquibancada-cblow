@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { navManager } from '$lib/runes.svelte';
+    import MenuNavButton from '../menuNavButton.svelte';
     import WatchButton from '../watchButton.svelte';
 
 
@@ -17,9 +19,11 @@
 {/snippet}
 
 <nav>
-    <div class="content_wrapper">
+    <div class="background"></div>
+    <div class="content_wrapper">   
+        <MenuNavButton />
         <h1>arquibancada<br/>cblow</h1>
-        <ul id="navbar_link_group">
+        <ul id="navbar_link_group" class={[navManager.isOpen ? "navbar-open" : ""].join(" ")}>
             {#each nav_links as l}
                 {@render link(l)}
             {/each}
@@ -37,13 +41,21 @@
         width: 100%;
         height: 128px;
 
-        background-color: var(--color-navbar-bg);
-        backdrop-filter: blur(32px);
-
-        border-radius: 0px 0px 16px 16px;
-        border-bottom: 1px solid var(--color-block-stroke-default);
-
         position: sticky;
+        z-index: 10;
+
+        & .background {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            background-color: var(--color-navbar-bg);
+            backdrop-filter: blur(32px);
+
+            border-radius: 0px 0px 16px 16px;
+            border-bottom: 1px solid var(--color-block-stroke-default);
+        }
 
         & .content_wrapper {
             display: flex;
@@ -72,8 +84,62 @@
                 &:has(.navbar_link:hover) .navbar_link:not(:hover) {
                     opacity: 0.4;
                 }
+
+                & .navbar_link {
+                    display: flex;
+                }
             }
 
+            @media screen and (max-width: 964px) {
+                & :is(h1, :global(.watch_button)) { position: static; }
+                & h1 { margin-right: auto; }
+                & #navbar_link_group { 
+                    position: absolute; 
+                    transform: translateY(-50%);
+                    bottom: 0px;
+                    left: 16px;
+                    z-index: -1;
+
+                    transition-property: bottom;
+                    transition-duration: .3s;
+
+                    &.navbar-open {
+                        bottom: calc(-64px - 8px);
+                    }
+                }
+            }
+
+            @media screen and (max-width: 600px) {
+                & :global(.watch_button) { display: none; }
+
+                & #navbar_link_group { 
+                    z-index: 10;
+                    bottom: -32px;
+                    transform: translate(calc(-100% - 32px), 100%);
+
+                    display: flex;
+                    flex-direction: column;
+
+                    border: 1px solid var(--color-block-stroke-default);
+                    background-color: #000000df;
+                    background-color: oklch(0 0 0/0.95);
+
+                    box-sizing: border-box;
+                    padding: 16px;
+                    border-radius: 16px;
+
+                    width: calc(100% - 32px);
+
+                    transition: transform .3s;
+
+                    & :global(li) { width: 100%; }
+
+                    &.navbar-open {
+                        transform: translate(0px, 100%);
+                        bottom: -32px;
+                    }
+                }
+            }
         }
     }
 
