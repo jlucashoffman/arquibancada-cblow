@@ -33,7 +33,11 @@
     <div class="background"></div>
     <div class="content_wrapper">   
         <MenuNavButton />
+        <div id="navbar_header">
         <h1>arquibancada<br/>cblow</h1>
+        <p>2026</p>
+        </div>
+        
         <ul id="navbar_link_group" class={[navManager.isOpen ? "navbar-open" : ""].join(" ")}>
             {#each nav_links as l}
                 {@render link(l)}
@@ -100,10 +104,10 @@
             box-sizing: border-box;
             padding: 16px;
 
-            & :is(h1, :global(.watch_button)) {
+            & :is(#navbar_header, :global(.watch_button)) {
                 position: absolute;
 
-                &:is(h1) { left: 16px; }
+                &:is(#navbar_header) { left: 16px; }
                 &:global(.watch_button) { right: 16px; }
             }
 
@@ -124,8 +128,8 @@
             }
 
             @media screen and (max-width: 964px) {
-                & :is(h1, :global(.watch_button)) { position: static; }
-                & h1 { margin-right: auto; }
+                & :is(#navbar_header, :global(.watch_button)) { position: static; }
+                & #navbar_header { margin-right: auto; }
                 & #navbar_link_group { 
                     justify-content: flex-start;
                     position: absolute; 
@@ -207,5 +211,11 @@
 
             background: var(--color-brand-main);
         }
+    }
+
+    #navbar_header p {
+            position: absolute;
+            bottom: calc(1em * -1 - 4px);
+            opacity: .35;
     }
 </style>
