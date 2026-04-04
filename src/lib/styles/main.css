@@ -20,7 +20,7 @@
     /* variáveis */
     --color-page-bg: oklch(0 0 0);
     --color-navbar-bg: oklch(0 0 0/0.8);
-    --color-block-stroke-default: oklch(0.2 0 0);
+    --color-block-stroke-default: oklch(32.109% 0.00004 271.152);
     --color-text: oklch(1 0 0/0.9);
     --color-brand-main: oklch(0.938 0.1956 123.13);
     --color-brand-stroke: oklch(0.938 0.1056 123.13);
