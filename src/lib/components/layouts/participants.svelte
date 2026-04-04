@@ -152,6 +152,11 @@
                     padding: 4px 8px;
                     border-radius: 8px;
 
+                    &:hover {
+                        background-color: #ffffff26;
+                        background-color: oklch(1 0 0/0.15);
+                    }
+
                     & img {
                         width: 24px;
                     }
@@ -217,8 +222,6 @@
             box-sizing: border-box;
             padding: 4px;
             border-radius: 4px;
-
-            transition: background-color .3s;
 
             &:hover {
                 background-color: #ffffff16;
