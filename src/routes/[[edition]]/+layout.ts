@@ -3,14 +3,16 @@ export const prerender = true;
 import { fetchAll, filter } from "$lib/fetchs";
 import { redirect } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
-import type { IEditionCollection, IHostsCollection, IPlayersCollection, ITeamsCollection, IChampionshipData, ICardCollection } from "$lib/database/interfaces";
+import type { IEditionCollection, IHostsCollection, IPlayersCollection, ITeamsCollection, IChampionshipData, ICardCollection, IMatchCollection, ISummonerCollection } from "$lib/database/interfaces";
 
 const blankChampionshipData:IChampionshipData = {
     editions: [],
     hosts: [],
     teams: [],
     players: [],
-    cards: []
+    cards: [],
+    matches: [],
+    summoners: []
 }
 
 export const load:LayoutLoad = 
@@ -35,11 +37,13 @@ export const load:LayoutLoad =
         throw redirect(302, `/${lastEdition}${suffix}`)
     }
 
-    const [hosts, teams, players, cards] = await Promise.all([
+    const [hosts, teams, players, cards, matches, summoners] = await Promise.all([
         fetchAll<IHostsCollection>(fetch, 'hosts', filter.hosts),
         fetchAll<ITeamsCollection>(fetch, 'teams', filter.teams),
         fetchAll<IPlayersCollection>(fetch, 'team_deal', filter.players),
-        fetchAll<ICardCollection>(fetch, 'cards', filter.cards)],
+        fetchAll<ICardCollection>(fetch, 'cards', filter.cards),
+        fetchAll<IMatchCollection>(fetch, 'match_history', filter.matches),
+        fetchAll<ISummonerCollection>(fetch, 'match_composition', filter.summoners)],
         )
 
     const editionId:string = existEdition[0].id
@@ -52,7 +56,9 @@ export const load:LayoutLoad =
             hosts: hosts,
             teams: teams,
             players: players,
-            cards: cards
+            cards: cards,
+            matches: matches,
+            summoners: summoners
         }
     }
 }

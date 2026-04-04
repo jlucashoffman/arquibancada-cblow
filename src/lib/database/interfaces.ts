@@ -12,6 +12,7 @@ type TeamSituation = "winner" | "active" | "defeated"
 type PlayerPerson = Pick<IPersonCollection, "name" | "pfp" | "livestream" | "puuid">
 type PlayerRole = "top" | "jg" | "mid" | "adc" | "sup"
 type PlayerSituation = "active" | "transferred" | "kicked"
+type MatchType = "MD1" | "MD3" | "MD5"
 
 export interface IEditionCollection {
     id: string
@@ -58,10 +59,39 @@ export interface ICardCollection {
     active: boolean
 }
 
+export interface IMatchCollection {
+    id: string
+    winner: string
+    blue_side: string
+    red_sid: string
+    card: string
+    expand: {
+        match_group: {
+            edition: string
+            type: MatchType
+        }
+    }
+}
+
+export interface ISummonerCollection {
+    id: string
+    match: string
+    player: string
+    champion: string
+    role: PlayerRole
+    spell_01: string
+    spell_02: string
+    expand: {
+        team: Pick<ITeamsCollection, "edition" | "name" | "id">
+    }
+}
+
 export interface IChampionshipData {
     editions: IEditionCollection[]
     hosts: IHostsCollection[]
     teams: ITeamsCollection[]
     players: IPlayersCollection[]
-    cards: ICardCollection[]
+    cards: ICardCollection[],
+    matches: IMatchCollection[],
+    summoners: ISummonerCollection[]
 }
