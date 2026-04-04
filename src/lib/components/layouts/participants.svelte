@@ -112,6 +112,10 @@
 
                 &:is(.hosts) {
                     grid-template-columns: repeat(2, [col-start] 1fr);
+
+                    @media screen and (max-width: 600px) {
+                        grid-template-columns: repeat(1, [col-start] 1fr);
+                    }
                 }
 
                 @media screen and (max-width: 964px) {

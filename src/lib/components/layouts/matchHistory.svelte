@@ -113,7 +113,7 @@
                                         <p class="summoner_name">{p?.expand?.player?.name}</p>
                                         <p class="summoner_champion">{handleCodinames(p?.champion as string)}</p>
                                         {#if p?.expand.player.bot}
-                                            <p class="player_is_bot">BOT</p>
+                                        <p class="player_is_bot">BOT</p>
                                         {/if}
                                     </div>
                                     <!-- <p class="summoner_kda">
@@ -212,16 +212,30 @@
                         align-items: center;
                         gap: 16px;
                         flex: 2;
+                        position: relative;
 
                         & .team_label {
                             font-size: 2em;
                             font-weight: bold;
+
+                            @media screen and (max-width: 350px) { 
+                                font-size: 1.65em;
+                            }
                         }
 
                         & .team_name {
                             opacity: 0.5;
                             font-size: 0.8em;
                             line-height: 1.2em;
+
+                            @media screen and (max-width: 600px) { 
+                                position: absolute;
+                                bottom: -8px;
+                            }
+
+                            @media screen and (max-width: 350px) { 
+                                display: none;
+                            }
                         }
 
                         &:nth-child(3) {
@@ -380,6 +394,10 @@
                                     margin-left: 0px;
                                     margin-right: auto;
                                 }
+
+                                & .summoner_info {
+                                    text-align: right;
+                                }
                             }
 
                             & li {
@@ -401,6 +419,12 @@
                                         border-radius: 50%;
                                         width: 24px;
                                     }
+
+                                    & .summoner_role {
+                                        @media screen and (max-width: 600px) {
+                                            display: none;
+                                        }
+                                    }
                                 }
                                 
                                 & .summoner_info {
@@ -413,6 +437,16 @@
                                     & .summoner_champion {
                                         opacity: .4;
                                         text-transform: uppercase;
+
+                                        @media screen and (max-width: 600px) {
+                                            display: none;
+                                        }
+                                    }
+
+                                    & .summoner_champion {
+                                        @media screen and (max-width: 600px) {
+                                            font-size: 0.6em;
+                                        }
                                     }
 
                                     & .player_is_bot {
