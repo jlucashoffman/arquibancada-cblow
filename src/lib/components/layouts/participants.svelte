@@ -1,10 +1,45 @@
 <script lang="ts">
+    import { championshipData } from '$lib/runes.svelte';
+
 
 type TypePrincipalCard = [name: string, pfp: string, url: string];
 type TypePlayerCard = [role: string, name: string, url: string];
 type TypeTeamMoment = "winner" | "active" | "defeated"
 
+interface IPerson {
+    name: string;
+    pfp: string;
+    livestream: string;
+}
+
+interface IHostRecord {
+    expand?: {
+        person?: IPerson;
+    };
+}
+
+interface ITeamRecord {
+    id: string,
+    name: string,
+    label: string,
+    situation: "winner" | "active" | "defeated",
+    expand: {
+        president: IPerson
+    }
+}
+
+interface IPlayerRecord {
+    role: string,
+    expand: {
+        person: IPerson,
+        team: {
+            id: string
+        }
+    }
+}
+
 interface ITeam {
+    id: string,
     name: string,
     label: string,
     situation: TypeTeamMoment,
@@ -12,117 +47,31 @@ interface ITeam {
     players: TypePlayerCard[]
 }
 
-const hosts:TypePrincipalCard[] = [
-    ["yoda", "yoda.webp", ""],
-    ["bronziocre", "bronziocre.webp", ""]
-]
+const hostRecords:IHostRecord[] = championshipData.hosts ? JSON.parse(championshipData.hosts) : [];
+const teamsRecords:ITeamRecord[] = championshipData.teams ? JSON.parse(championshipData.teams) : [];
+const playersRecords:IPlayerRecord[] = championshipData.players ? JSON.parse(championshipData.players) : [];
 
-const teams:ITeam[] = [
-    {
-        name: "lowchonete",
-        label: "lct",
-        situation: "active",
-        principal: ["arthur lanches", "artur.webp", ""],
-        players: [
-            ["top", "osurt", ""],
-            ["jg", "veio whatsapp", ""],
-            ["mid", "azirdewarmog", ""],
-            ["adc", "criz", ""],
-            ["sup", "micael pastel", ""]
-        ]
-    },
-    {
-        name: "bronzinthians",
-        label: "",
-        situation: "active",
-        principal: ["luma", "luma.webp", ""],
-        players: [
-            ["top", "bpm zecapagod", ""],
-            ["jg", "pdj shaco faccao", ""],
-            ["mid", "frenezeri", ""],
-            ["adc", "nkz", ""],
-            ["sup", "theuz", ""]
-        ]
-    },
-    {
-        name: "skt teleton",
-        label: "skt",
-        situation: "active",
-        principal: ["rodil", "rodil.webp", ""],
-        players: [
-            ["top", "kissidane", ""],
-            ["jg", "pdj shaco faccao", ""],
-            ["mid", "frenezeri", ""],
-            ["adc", "megaextro", ""],
-            ["sup", "pombo", ""]
-        ]
-    },
-    {
-        name: "oreiudos junior",
-        label: "",
-        situation: "active",
-        principal: ["brucer", "brucer.webp", ""],
-        players: [
-            ["top", "chenderboy", ""],
-            ["jg", "vks bmag", ""],
-            ["mid", "danverll", ""],
-            ["adc", "loose", ""],
-            ["sup", "eu me caguei", ""]
-        ]
-    },
-    {
-        name: "sktenis academy",
-        label: "",
-        situation: "active",
-        principal: ["yetz", "yetz.webp", ""],
-        players: [
-            ["top", "mielcohen", ""],
-            ["jg", "zangrando", ""],
-            ["mid", "o bobo", ""],
-            ["adc", "thaaylady", ""],
-            ["sup", "sojogomutado", ""]
-        ]
-    },
-    {
-        name: "t1lápias",
-        label: "",
-        situation: "active",
-        principal: ["kennzy", "kenzy.webp", ""],
-        players: [
-            ["top", "carecalhadora", ""],
-            ["jg", "vô corvo1", ""],
-            ["mid", "ruim e esquisito", ""],
-            ["adc", "elgato", ""],
-            ["sup", "oxee", ""]
-        ]
-    },
-    {
-        name: "shoppingfu tatuapelion",
-        label: "",
-        situation: "active",
-        principal: ["revolta", "rebola.webp", ""],
-        players: [
-            ["top", "cap farinha", ""],
-            ["jg", "zerochannn", ""],
-            ["mid", "kirah", ""],
-            ["adc", "rluperin1", ""],
-            ["sup", "mandszinha", ""]
-        ]
-    },
-    {
-        name: "vos bronze",
-        label: "",
-        situation: "active",
-        principal: ["absolut", "absolut.webp", ""],
-        players: [
-            ["top", "jeiel up", ""],
-            ["jg", "castro yse", ""],
-            ["mid", "galorural", ""],
-            ["adc", "lipeeh", ""],
-            ["sup", "é o puxas", ""]
-        ]
+const hosts:TypePrincipalCard[] = hostRecords.map((host): TypePrincipalCard => {
+    const person = host.expand?.person;
+
+    return [person?.name ?? "", person?.pfp ?? "", person?.livestream ?? ""];
+})
+
+const teams:ITeam[] = teamsRecords.map((team): ITeam => {
+
+    const president = team.expand.president
+
+    return {
+        id: team.id,
+        name: team.name,
+        label: team.label,
+        situation: team.situation,
+        principal: [president?.name ?? "", president?.pfp ?? "", president?.livestream ?? ""],
+        players: playersRecords.filter((p) => {return p.expand.team.id == team.id}).map((p): TypePlayerCard => {
+            return [p.role ?? "", p.expand.person.name ?? "", p.expand.person.livestream ?? ""];
+        })
     }
-]
+})
 
 let div_hosts:HTMLDivElement;
 let div_teams:HTMLDivElement;

@@ -1,15 +1,23 @@
 <script lang="ts">
     import Crowds from "$lib/components/layouts/crowds.svelte";
+    import Edition from "$lib/components/layouts/edition.svelte";
     import HeroLivePreview from "$lib/components/layouts/heroLivePreview.svelte";
     import MatchHistory from "$lib/components/layouts/matchHistory.svelte";
     import MatchKeying from "$lib/components/layouts/matchKeying.svelte";
     import Navbar from "$lib/components/layouts/navbar.svelte";
     import Participants from "$lib/components/layouts/participants.svelte";
-    import { livestreamObserver } from "$lib/runes.svelte";
+    import { championshipEdition, livestreamObserver, progressManager } from "$lib/runes.svelte";
     import { onMount } from "svelte";
+    import type { PageProps } from "./$types";
+    import Loading from "$lib/components/loading.svelte";
+
+    let { data }: PageProps = $props();
 
     onMount(() => {
         livestreamObserver.loopObserver();
+        championshipEdition.define(data.editions[0].name, data.editions[0].id);
+
+        if (championshipEdition.edition != "") progressManager.editionLoaded = true
 
         return(() => livestreamObserver.clearLoop());
     })
@@ -19,13 +27,17 @@
 <Navbar />
 
 <main>
-    {#if livestreamObserver.inLive}
-    <HeroLivePreview />
+    {#if livestreamObserver.inLive} <HeroLivePreview /> {/if}
+    {#if !progressManager.editionLoaded} <Loading />
+    {:else}
+        <Edition editions={data.editions} />
+        {#if progressManager.dataLoaded} <Participants /> {/if}
+        
+        <!-- <Crowds />
+        <MatchKeying />
+        <MatchHistory /> -->
+        {#if !progressManager.dataLoaded} <Loading /> {/if}
     {/if}
-    <Participants />
-    <Crowds />
-    <MatchKeying />
-    <MatchHistory />
 </main>
 
 <style>
