@@ -49,7 +49,6 @@ export const filter = {
         expand: "president"
     },
     players: {
-        filter: "situation='active' || situation='transferred'",
         expand: "team,person,president"
     }
 }
