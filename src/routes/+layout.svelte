@@ -8,7 +8,7 @@
 
 	let { children } = $props();
 
-	const googleIcons = "arrow_outward,close,menu";
+	const googleIcons = "arrow_outward,close,menu,playing_cards";
 </script>
 
 <svelte:head>
