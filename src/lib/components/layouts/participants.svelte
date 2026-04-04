@@ -125,17 +125,30 @@
 
             & #exclude_members {
                 display: flex;
-                gap: 32px;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
 
                 opacity: .65;
 
                 & .player_label {
                     display: flex;
                     align-items: center;
+                    gap: 4px;
                     font-size: 0.75rem;
+                    border: 1px solid var(--color-block-stroke-default);
+                    background-color: #ffffff0d;
+                    background-color: oklch(1 0 0/0.05);
+                    box-sizing: border-box;
+                    padding: 4px 8px;
+                    border-radius: 8px;
 
                     & img {
                         width: 24px;
+                    }
+
+                    & p {
+                        text-overflow: ellipsis;
                     }
                 }
 
