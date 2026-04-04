@@ -50,5 +50,8 @@ export const filter = {
     },
     players: {
         expand: "team,person,president"
+    },
+    cards: {
+        
     }
 }

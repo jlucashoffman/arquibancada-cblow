@@ -48,9 +48,20 @@ export interface IPlayersCollection {
     }
 }
 
+export interface ICardCollection {
+    edition: string
+    id: string
+    version: number
+    name: string
+    description: string
+    image: string
+    active: boolean
+}
+
 export interface IChampionshipData {
-    editions: IEditionCollection[],
-    hosts: IHostsCollection[],
-    teams: ITeamsCollection[],
+    editions: IEditionCollection[]
+    hosts: IHostsCollection[]
+    teams: ITeamsCollection[]
     players: IPlayersCollection[]
+    cards: ICardCollection[]
 }
