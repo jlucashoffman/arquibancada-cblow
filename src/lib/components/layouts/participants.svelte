@@ -1,117 +1,51 @@
 <script lang="ts">
-    import { championshipData } from '$lib/runes.svelte';
+    import { gameMaster } from '$lib/database/data.svelte';
+    import type { HostPerson, IPlayersCollection, ITeamsCollection, PresidentPerson } from '$lib/database/interfaces';
 
-
-type TypePrincipalCard = [name: string, pfp: string, url: string];
-type TypePlayerCard = [role: string, name: string, url: string];
-type TypeTeamMoment = "winner" | "active" | "defeated"
-
-interface IPerson {
-    name: string;
-    pfp: string;
-    livestream: string;
-}
-
-interface IHostRecord {
-    expand?: {
-        person?: IPerson;
+    const roleOrder: Record<string, number> = {
+        top: 0,
+        jg: 1,
+        mid: 2,
+        adc: 3,
+        bot: 4,
+        sup: 5
     };
-}
 
-interface ITeamRecord {
-    id: string,
-    name: string,
-    label: string,
-    situation: "winner" | "active" | "defeated",
-    expand: {
-        president: IPerson
-    }
-}
-
-interface IPlayerRecord {
-    role: string,
-    expand: {
-        person: IPerson,
-        team: {
-            id: string
-        }
-    }
-}
-
-interface ITeam {
-    id: string,
-    name: string,
-    label: string,
-    situation: TypeTeamMoment,
-    principal: TypePrincipalCard,
-    players: TypePlayerCard[]
-}
-
-const hostRecords = $derived.by<IHostRecord[]>(() => {
-    if (!championshipData.hosts) return [];
-    return JSON.parse(championshipData.hosts) as IHostRecord[];
-});
-
-const teamsRecords = $derived.by<ITeamRecord[]>(() => {
-    if (!championshipData.teams) return [];
-    return JSON.parse(championshipData.teams) as ITeamRecord[];
-});
-
-const playersRecords = $derived.by<IPlayerRecord[]>(() => {
-    if (!championshipData.players) return [];
-    return JSON.parse(championshipData.players) as IPlayerRecord[];
-});
-
-const hosts = $derived.by<TypePrincipalCard[]>(() => {
-    return hostRecords.map((host): TypePrincipalCard => {
-        const person = host.expand?.person;
-
-        return [person?.name ?? "", person?.pfp ?? "", person?.livestream ?? ""];
-    });
-});
-
-const teams = $derived.by<ITeam[]>(() => {
-    return teamsRecords.map((team): ITeam => {
-        const president = team.expand.president;
-
-        return {
-            id: team.id,
-            name: team.name,
-            label: team.label,
-            situation: team.situation,
-            principal: [president?.name ?? "", president?.pfp ?? "", president?.livestream ?? ""],
-            players: playersRecords.filter((p) => p.expand.team.id == team.id).map((p): TypePlayerCard => {
-                return [p.role ?? "", p.expand.person.name ?? "", p.expand.person.livestream ?? ""];
-            })
-        }
-    });
-});
-
-let div_hosts:HTMLDivElement;
-let div_teams:HTMLDivElement;
+    const sortPlayersByRole = (players: IPlayersCollection[]) => {
+        return [...players].sort((a, b) => {
+            return (roleOrder[a.role] ?? Number.MAX_SAFE_INTEGER) - (roleOrder[b.role] ?? Number.MAX_SAFE_INTEGER);
+        });
+    };
 
 </script>
 
-{#snippet principalCard([name, pfp, url]:TypePrincipalCard)}
-    <a class="card_principal panel_style" href={url} target="_blank">
-        <img src={`assets/pfps/${pfp}`} alt={`foto de perfil ${name}`}>
-        <p>{name}</p>
+{#snippet hostCard(host:HostPerson)}
+    <a class="card_principal panel_style" href={host.livestream} target="_blank">
+        <img src={`assets/pfps/${host.pfp}`} alt={`foto de perfil ${host.name}`}>
+        <p>{host.name}</p>
     </a>
 {/snippet}
 
-{#snippet playerLabel([role, name, url]:TypePlayerCard)}
-    <a class="player_label" href={url} target="_blank">
-        <img src={`assets/roles/${role}.svg`} alt="">
-        <p>{name}</p>
+{#snippet presidentCard(president:PresidentPerson)}
+    <a class="card_principal panel_style" href={president.livestream} target="_blank">
+        <img src={`assets/pfps/${president.pfp}`} alt={`foto de perfil ${president.name}`}>
+        <p>{president.name}</p>
     </a>
 {/snippet}
 
-{#snippet teamCard(t:ITeam)}
+{#snippet playerLabel(player: Pick<IPlayersCollection, "role" | "expand">)}
+    <a class="player_label" href={player.expand.person.livestream} target="_blank">
+        <img src={`assets/roles/${player.role}.svg`} alt="">
+        <p>{player.expand.person.name}</p>
+    </a>
+{/snippet}
+
+{#snippet teamCard(t:ITeamsCollection)}
     <div class="card_team panel_style">
         <h4>{t.name}</h4>
-        {@render principalCard(t.principal)}
+        {@render presidentCard(t.expand.president)}
         <div>
-            {#each t.players as p}
+            {#each sortPlayersByRole(gameMaster.data?.players.filter((p) => p.team === t.id) ?? []) as p}
                 {@render playerLabel(p)}
             {/each}
         </div>
@@ -123,14 +57,14 @@ let div_teams:HTMLDivElement;
         <h2>participantes</h2>
         <div id="participants_box" class="panel_style">
             <h3>hosts</h3>
-            <div bind:this={div_hosts} class="participants_cards">
-                {#each hosts as h}
-                    {@render principalCard(h)}
+            <div class="participants_cards">
+                {#each gameMaster.data?.hosts as h}
+                {@render hostCard(h.expand.person)}
                 {/each}
             </div>
             <h3>times</h3>
-            <div bind:this={div_teams} class="participants_cards">
-                {#each teams as t}
+            <div class="participants_cards">
+                {#each gameMaster.data?.teams as t}
                     {@render teamCard(t)}
                 {/each}
             </div>
