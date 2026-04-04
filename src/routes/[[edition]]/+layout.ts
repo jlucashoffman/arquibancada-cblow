@@ -42,7 +42,7 @@ export const load:LayoutLoad =
         fetchAll<ITeamsCollection>(fetch, 'teams', filter.teams),
         fetchAll<IPlayersCollection>(fetch, 'team_deal', filter.players),
         fetchAll<ICardCollection>(fetch, 'cards', filter.cards),
-        fetchAll<IMatchCollection>(fetch, 'match_history', filter.matches),
+        fetchAll<IMatchCollection>(fetch, 'match_group', filter.matches),
         fetchAll<ISummonerCollection>(fetch, 'match_composition', filter.summoners)],
         )
 

@@ -61,14 +61,17 @@ export interface ICardCollection {
 
 export interface IMatchCollection {
     id: string
-    winner: string
-    blue_side: string
-    red_sid: string
-    card: string
+    teams: string[]
+    type: MatchType
+    battle:string
+    edition: string
     expand: {
-        match_group: {
-            edition: string
-            type: MatchType
+        matches: {
+            id: string
+            winner: string
+            blue_side: string
+            red_side: string
+            card: string
         }
     }
 }

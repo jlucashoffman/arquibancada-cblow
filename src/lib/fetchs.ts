@@ -53,7 +53,7 @@ export const filter = {
     },
     cards: {},
     matches: {
-        expand: "match_group"
+        expand: "matches"
     },
     summoners: {
         expand: "team"
