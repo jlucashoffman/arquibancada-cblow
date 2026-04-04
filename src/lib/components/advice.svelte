@@ -12,5 +12,6 @@
         padding: 8px 32px;
         border-radius: 8px;
         max-width: 600px;
+        text-align: center;
     }
 </style>
