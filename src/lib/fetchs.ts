@@ -51,7 +51,11 @@ export const filter = {
     players: {
         expand: "team,person,president"
     },
-    cards: {
-        
+    cards: {},
+    matches: {
+        expand: "match_group"
+    },
+    summoners: {
+        expand: "team"
     }
 }
