@@ -32,7 +32,7 @@
 <Navbar />
 
 <main>
-    {#if livestreamObserver.inLive} <HeroLivePreview /> {/if}
+    <HeroLivePreview />
     {#if !progressManager.editionLoaded} <Loading />
     {:else}
         <Edition editions={data.editions} />

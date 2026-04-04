@@ -1,11 +1,9 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import WatchButton from "../watchButton.svelte";
     import { livestreamObserver } from "$lib/runes.svelte";
-
-    
-
 </script>
+
+{#if livestreamObserver.inLive} 
 <section id="section_hero">
     <img id="banner_hero" src="assets/banner.png" alt="teste">
     <div class="content_wrapper">
@@ -24,6 +22,7 @@
         <WatchButton />
     </div>
 </section>
+{/if}
 
 <style>
     #banner_hero {
