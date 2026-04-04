@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { navManager } from "$lib/runes.svelte";
+    import { navManager } from "./layouts/navbar/logic.svelte";
 </script>
 
 <button type="button" onclick={() => { navManager.trigger() }}>

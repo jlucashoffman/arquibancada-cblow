@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { navManager } from '$lib/runes.svelte';
+    import MenuNavButton from '$lib/components/menuNavButton.svelte';
     import { onMount } from 'svelte';
-    import MenuNavButton from '../menuNavButton.svelte';
-    import WatchButton from '../watchButton.svelte';
+    import { navManager } from './logic.svelte';
+    import WatchButton from '$lib/components/watchButton.svelte';
 
     type LinkObject = [label: string, url: string]
 

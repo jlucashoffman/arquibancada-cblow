@@ -1,18 +1,18 @@
 <script lang="ts">
-    import WatchButton from "../watchButton.svelte";
-    import { livestreamObserver } from "$lib/runes.svelte";
+    import WatchButton from "../../watchButton.svelte";
+    import { livestreamObserver } from "./logic.svelte";
 </script>
 
-{#if livestreamObserver.inLive} 
 <section id="section_hero">
     <img id="banner_hero" src="assets/banner.png" alt="teste">
     <div class="content_wrapper">
+        {#if livestreamObserver.inLive} 
         <div id="livestream_wrapper">
             <div id="livestream_video">
                 <iframe 
                 id="main_stream_frame"
                 title=""
-                src="https://player.kick.com/jukes?muted=true"
+                src="https://player.kick.com/yoda?muted=true"
                 frameborder="0"
                 scrolling="no"></iframe>
             </div>
@@ -20,9 +20,14 @@
             <div id="livestream_overflow"></div>
         </div>    
         <WatchButton />
+        {:else}
+        <div id="not_in_live" class="panel_style">
+            <h2>Yoda não está em live no momento!</h2>
+        </div>
+        {/if}
     </div>
 </section>
-{/if}
+
 
 <style>
     #banner_hero {
@@ -33,7 +38,6 @@
         object-position: center;
 
         position: absolute;
-        top: 0;
         left: 0;
         z-index: -1;
     }
@@ -49,6 +53,8 @@
         align-items: center;
         gap: 16px;
 
+        margin-top: calc(128px + 64px);
+
         & #livestream_wrapper {
             position: relative;
             max-width: 958px;
@@ -57,6 +63,18 @@
             overflow: hidden;
 
             & iframe { width: 100%; aspect-ratio: 16/9; height: 100%; }
+        }
+
+        & #not_in_live {
+            max-width: 958px;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 16px;
+            padding: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     }
 </style>
