@@ -3,8 +3,16 @@
     import type { LayoutProps } from "./$types";
     import Navbar from "$lib/components/layouts/navbar/component.svelte";
     import { progressManager } from "$lib/progress.svelte";
+    import { onMount } from "svelte";
+    import { livestreamObserver } from "$lib/components/layouts/livePreview/logic.svelte";
 
     let { data, children }: LayoutProps = $props();
+
+    onMount(() => {
+        livestreamObserver.checkYoda()
+
+        return () => {livestreamObserver.clearLoop()}
+    })
 
     $effect(() => {
         gameMaster.selectedEdition = data.ed
