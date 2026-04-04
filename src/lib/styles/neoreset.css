@@ -4,7 +4,7 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-:is(button, select) {
+:is(button, select, a) {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
