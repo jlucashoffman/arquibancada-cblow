@@ -3,14 +3,24 @@
     import { onMount } from 'svelte';
     import { navManager } from './logic.svelte';
     import WatchButton from '$lib/components/watchButton.svelte';
+    import { page } from '$app/stores';
 
-    type LinkObject = [label: string, url: string]
+    type LinkObject = [label: string, key: 'participants' | 'cards' | 'history']
 
     const nav_links: LinkObject[] = [
-        ["participantes", ""],
-        ["baralho", "cartas"],
-        ["histórico de partidas", ""]
+        ["participantes", "participants"],
+        ["baralho", "cards"],
+        ["histórico de partidas", "history"]
     ]
+
+    const resolveLink = (key: LinkObject[1]) => {
+        const edition = $page.params.edition;
+        const basePath = edition ? `/${edition}` : "/";
+
+        if (key === 'participants') return `${basePath}#participants_section`;
+        if (key === 'history') return `${basePath}#match_history_section`;
+        return `${basePath}/cartas`;
+    };
 
     let isShrunk = $state(false)
 
@@ -22,12 +32,12 @@
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     })
+
 </script>
 
 {#snippet link(l: LinkObject)}
-    <li><a class="navbar_link label_text" href={l[1]}>{l[0]}</a></li>
+    <li><a class="navbar_link label_text" href={resolveLink(l[1])}>{l[0]}</a></li>
 {/snippet}
-
 <nav class:nav-small={isShrunk}>
     <div class="background"></div>
     <div class="content_wrapper">   
