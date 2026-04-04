@@ -15,7 +15,12 @@
 
     onMount(() => {
         livestreamObserver.loopObserver();
-        championshipEdition.define(data.editions[0].name, data.editions[0].id, data.editions[0].brackets);
+        championshipEdition.define(
+            data.editions[0].name,
+            data.editions[0].id,
+            data.editions[0].brackets,
+            data.editions[0].prefetched
+        );
 
         if (championshipEdition.edition != "") progressManager.editionLoaded = true
 

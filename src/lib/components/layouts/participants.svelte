@@ -47,31 +47,45 @@ interface ITeam {
     players: TypePlayerCard[]
 }
 
-const hostRecords:IHostRecord[] = championshipData.hosts ? JSON.parse(championshipData.hosts) : [];
-const teamsRecords:ITeamRecord[] = championshipData.teams ? JSON.parse(championshipData.teams) : [];
-const playersRecords:IPlayerRecord[] = championshipData.players ? JSON.parse(championshipData.players) : [];
+const hostRecords = $derived.by<IHostRecord[]>(() => {
+    if (!championshipData.hosts) return [];
+    return JSON.parse(championshipData.hosts) as IHostRecord[];
+});
 
-const hosts:TypePrincipalCard[] = hostRecords.map((host): TypePrincipalCard => {
-    const person = host.expand?.person;
+const teamsRecords = $derived.by<ITeamRecord[]>(() => {
+    if (!championshipData.teams) return [];
+    return JSON.parse(championshipData.teams) as ITeamRecord[];
+});
 
-    return [person?.name ?? "", person?.pfp ?? "", person?.livestream ?? ""];
-})
+const playersRecords = $derived.by<IPlayerRecord[]>(() => {
+    if (!championshipData.players) return [];
+    return JSON.parse(championshipData.players) as IPlayerRecord[];
+});
 
-const teams:ITeam[] = teamsRecords.map((team): ITeam => {
+const hosts = $derived.by<TypePrincipalCard[]>(() => {
+    return hostRecords.map((host): TypePrincipalCard => {
+        const person = host.expand?.person;
 
-    const president = team.expand.president
+        return [person?.name ?? "", person?.pfp ?? "", person?.livestream ?? ""];
+    });
+});
 
-    return {
-        id: team.id,
-        name: team.name,
-        label: team.label,
-        situation: team.situation,
-        principal: [president?.name ?? "", president?.pfp ?? "", president?.livestream ?? ""],
-        players: playersRecords.filter((p) => {return p.expand.team.id == team.id}).map((p): TypePlayerCard => {
-            return [p.role ?? "", p.expand.person.name ?? "", p.expand.person.livestream ?? ""];
-        })
-    }
-})
+const teams = $derived.by<ITeam[]>(() => {
+    return teamsRecords.map((team): ITeam => {
+        const president = team.expand.president;
+
+        return {
+            id: team.id,
+            name: team.name,
+            label: team.label,
+            situation: team.situation,
+            principal: [president?.name ?? "", president?.pfp ?? "", president?.livestream ?? ""],
+            players: playersRecords.filter((p) => p.expand.team.id == team.id).map((p): TypePlayerCard => {
+                return [p.role ?? "", p.expand.person.name ?? "", p.expand.person.livestream ?? ""];
+            })
+        }
+    });
+});
 
 let div_hosts:HTMLDivElement;
 let div_teams:HTMLDivElement;
