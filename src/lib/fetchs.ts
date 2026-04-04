@@ -49,13 +49,13 @@ export const filter = {
         expand: "president"
     },
     players: {
-        expand: "team,person,president"
+        expand: "team,person"
     },
     cards: {},
     matches: {
         expand: "matches"
     },
     summoners: {
-        expand: "team"
+        expand: "team,player"
     }
 }

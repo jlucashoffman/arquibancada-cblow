@@ -9,7 +9,7 @@ interface IPersonCollection {
 export type HostPerson = Pick<IPersonCollection, "name" | "pfp" | "livestream">
 export type PresidentPerson = Pick<IPersonCollection, "name" | "pfp" | "livestream" | "puuid">
 type TeamSituation = "winner" | "active" | "defeated"
-type PlayerPerson = Pick<IPersonCollection, "name" | "pfp" | "livestream" | "puuid">
+type PlayerPerson = Pick<IPersonCollection, "bot"| "name" | "pfp" | "livestream" | "puuid">
 type PlayerRole = "top" | "jg" | "mid" | "adc" | "sup"
 type PlayerSituation = "active" | "transferred" | "kicked"
 type MatchType = "MD1" | "MD3" | "MD5"
@@ -59,33 +59,37 @@ export interface ICardCollection {
     active: boolean
 }
 
+export interface IRoundCollection {
+    id: string
+    winner: string
+    blue_side: string
+    red_side: string
+    card: string
+}
+
 export interface IMatchCollection {
     id: string
     teams: string[]
+    patch:string
     type: MatchType
     battle:string
     edition: string
+    title: string
     expand: {
-        matches: {
-            id: string
-            winner: string
-            blue_side: string
-            red_side: string
-            card: string
-        }
+        matches: IRoundCollection[]
     }
 }
 
 export interface ISummonerCollection {
     id: string
     match: string
-    player: string
     champion: string
     role: PlayerRole
     spell_01: string
     spell_02: string
     expand: {
-        team: Pick<ITeamsCollection, "edition" | "name" | "id">
+        team: Pick<ITeamsCollection, "edition" | "name" | "id">,
+        player: PlayerPerson
     }
 }
 
