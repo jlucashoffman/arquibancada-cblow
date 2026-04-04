@@ -7,12 +7,14 @@
 	import "$lib/styles/main.css";
 
 	let { children } = $props();
+
+	const googleIcons = "arrow_outward,close,menu";
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_outward,close,menu" />
+	<link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=${googleIcons}`} />
 </svelte:head>
 
 {@render children()}
