@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import { championshipEdition } from "$lib/runes.svelte";
     import type { IBracketStage, IChampionshipBracket } from "$lib/runes.svelte";
 
@@ -170,4 +170,4 @@
             }
         }
     }
-</style>
+</style> -->
