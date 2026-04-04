@@ -21,8 +21,6 @@ Interessado em um jogador específico? Com a **Arquibancada** você poderá acom
 
 Aqui é uma lista para eu não me perder no que fazer
 
-- [ ] Registrar as cartas no banco de dados (sistema cartas e decks, caso haja modificação)
-- [ ] Sistema de histórico de partidas (times e cartas podem variar, atentar a isto)
 - [ ] Pick rate e win rate das cartas
 - [ ] Embaralhador de cartas (para quem quiser brincar)
 - [ ] Tabela com todas as cartas para visualização (mostrar as modificadas como versões)
@@ -30,6 +28,10 @@ Aqui é uma lista para eu não me perder no que fazer
 - [ ] Adicionar pódio
 - [ ] Criar campos "máximo de jogadores" e "máximo de times" para melhorar as requisições de API
 - [ ] Adicionar link para as partidas com timestamp
+- [ ] Fazer fantasy CBLOW
+- [ ] Adicionar lógica de double card, requisito: 2x0 em MD5
 - [x] ~~Adicionar responsividade antes q eu me perca em meio a tanta classe css~~
 - [x] ~~Criar banco de dados e importar os jogadores de lá, mantendo assim a tabela atualizada e controle de histórico~~
 - [x] ~~Filtragem por edição~~
+- [x] ~~Registrar as cartas no banco de dados (sistema cartas e decks, caso haja modificação)~~
+- [x] ~~Sistema de histórico de partidas (times e cartas podem variar, atentar a isto)~~
