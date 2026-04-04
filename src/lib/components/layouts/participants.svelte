@@ -45,7 +45,7 @@
         <h4>{t.name}</h4>
         {@render presidentCard(t.expand.president)}
         <div>
-            {#each sortPlayersByRole(gameMaster.data?.players.filter((p) => p.team === t.id) ?? []) as p}
+            {#each sortPlayersByRole(gameMaster.data?.players.filter((p) => {return (p.team === t.id) && ["active", "transferred"].includes(p.situation)}) ?? []) as p}
                 {@render playerLabel(p)}
             {/each}
         </div>
@@ -57,7 +57,7 @@
         <h2>participantes</h2>
         <div id="participants_box" class="panel_style">
             <h3>hosts</h3>
-            <div class="participants_cards">
+            <div class="participants_cards hosts">
                 {#each gameMaster.data?.hosts as h}
                 {@render hostCard(h.expand.person)}
                 {/each}
@@ -66,6 +66,12 @@
             <div class="participants_cards">
                 {#each gameMaster.data?.teams as t}
                     {@render teamCard(t)}
+                {/each}
+            </div>
+            <h3>Agradecimentos aos participantes excluídos</h3>
+            <div id="exclude_members">
+                {#each gameMaster.data?.players.filter((p) => p.situation === "kicked") as p}
+                {@render playerLabel(p)}
                 {/each}
             </div>
         </div>
@@ -100,13 +106,39 @@
 
             & .participants_cards {
                 display: grid;
-                grid-template-columns: repeat(2, [col-start] 1fr);
+                grid-template-columns: repeat(4, [col-start] 1fr);
                 width: 100%;
                 gap: 16px;
+
+                &:is(.hosts) {
+                    grid-template-columns: repeat(2, [col-start] 1fr);
+                }
+
+                @media screen and (max-width: 964px) {
+                    grid-template-columns: repeat(2, [col-start] 1fr);
+                }
 
                 @media screen and (max-width: 600px) {
                     grid-template-columns: repeat(1, [col-start] 1fr);
                 }
+            }
+
+            & #exclude_members {
+                display: flex;
+                gap: 32px;
+
+                opacity: .65;
+
+                & .player_label {
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.75rem;
+
+                    & img {
+                        width: 24px;
+                    }
+                }
+
             }
         }
     }
