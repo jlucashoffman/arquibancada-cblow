@@ -215,7 +215,6 @@
 
     #navbar_header p {
             position: absolute;
-            bottom: calc(1em * -1 - 4px);
             opacity: .35;
     }
 </style>
