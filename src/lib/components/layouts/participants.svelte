@@ -116,6 +116,15 @@
 
                 @media screen and (max-width: 964px) {
                     grid-template-columns: repeat(2, [col-start] 1fr);
+                    font-size: 0.9em;
+
+                    & .card_team div {
+                        gap: 2px;
+                    }
+
+                    & .player_label p {
+                        font-size: 0.8em;
+                    }
                 }
 
                 @media screen and (max-width: 600px) {
