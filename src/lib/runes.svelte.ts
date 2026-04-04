@@ -29,9 +29,70 @@ class LivestreamController {
     }
 }
 
+export type BracketTeamName = string | null;
+
+export interface IBracketMatch {
+    day: string;
+    team_a: BracketTeamName;
+    team_b: BracketTeamName;
+    winner: BracketTeamName;
+}
+
+export interface IBracketStage {
+    title: string;
+    matches: IBracketMatch[];
+}
+
+export interface IUpperBracket {
+    quarter: IBracketStage;
+    semis: IBracketStage;
+    upper_final: IBracketStage;
+    gran_final: IBracketStage;
+}
+
+export interface ILowerBracket {
+    elimination: IBracketStage;
+    retry: IBracketStage;
+    second_retry: IBracketStage;
+    lower_final: IBracketStage;
+}
+
+export interface IChampionshipBracket {
+    upper: IUpperBracket;
+    lower: ILowerBracket;
+}
+
+const normalizeBracket = (raw: unknown): IChampionshipBracket | null => {
+    if (!raw) return null;
+
+    // PocketBase can return JSON fields as object or string depending on schema/setup.
+    if (typeof raw === "object") {
+        return raw as IChampionshipBracket;
+    }
+
+    if (typeof raw === "string") {
+        try {
+            const parsed = JSON.parse(raw) as unknown;
+
+            if (typeof parsed === "string") {
+                return JSON.parse(parsed) as IChampionshipBracket;
+            }
+
+            if (parsed && typeof parsed === "object") {
+                return parsed as IChampionshipBracket;
+            }
+        } catch {
+            return null;
+        }
+    }
+
+    return null;
+}
+
 class EditionController {
     edition:string = $state("")
     editionId:string = $state("")
+    brackets:IChampionshipBracket | null = $state(null)
 
     ulrs= {
         hosts: "https://api.arquibancada-cblow.com.br/api/collections/hosts/records",
@@ -73,9 +134,11 @@ class EditionController {
         if (championshipData.teams != "") progressManager.teamsLoaded = true
     }
 
-    define = (name: string, id:string) => {
+    define = (name: string, id:string, b:unknown) => {
         this.edition = name
         this.editionId = id
+        this.brackets = normalizeBracket(b)
+
         this.updateData()
     }
 }

@@ -26,7 +26,7 @@
         <div class:opened={isOpen} class="panel_style" id="dropdown_wrapper" bind:this={dropdownDiv}>
             <ul>
             {#each editions as e}
-                <li><button class:checked={e.name === championshipEdition.edition} type="button" onclick={() => championshipEdition.define(e.name, e.id)}>{e.name}</button></li>
+                <li><button class:checked={e.name === championshipEdition.edition} type="button" onclick={() => championshipEdition.define(e.name, e.id, e.brackets)}>{e.name}</button></li>
             {/each}
             </ul>
         </div>

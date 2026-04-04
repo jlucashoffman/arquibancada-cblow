@@ -15,7 +15,7 @@
 
     onMount(() => {
         livestreamObserver.loopObserver();
-        championshipEdition.define(data.editions[0].name, data.editions[0].id);
+        championshipEdition.define(data.editions[0].name, data.editions[0].id, data.editions[0].brackets);
 
         if (championshipEdition.edition != "") progressManager.editionLoaded = true
 
@@ -33,8 +33,8 @@
         <Edition editions={data.editions} />
         {#if progressManager.dataLoaded} <Participants /> {/if}
         
-        <!-- <Crowds />
         <MatchKeying />
+        <!-- <Crowds />
         <MatchHistory /> -->
         {#if !progressManager.dataLoaded} <Loading /> {/if}
     {/if}
