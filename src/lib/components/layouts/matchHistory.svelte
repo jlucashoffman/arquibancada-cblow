@@ -22,6 +22,18 @@
         }, 300);
     }
 
+    const handleCodinames = (c:string) => {
+        switch (c) {
+            case "MonkeyKing":
+                return "Wukong"
+                break;
+        
+            default:
+                return c
+                break;
+        }
+    }
+
 </script>
 <section id="match_history_section">
     <div class="content_wrapper">
@@ -80,9 +92,9 @@
                                         <span class="team_points_assist">1</span>
                                     </p> -->
                                     {#if r.winner === t?.id}
-                                    <p class="team_round_winner">win</p>
+                                    <p class="team_round_winner">WIN</p>
                                     {:else}
-                                    <p class="team_round_loser">lose</p>
+                                    <p class="team_round_loser">LOSE</p>
                                     {/if}
                                 </div>
                             {/each}
@@ -99,7 +111,10 @@
                                     
                                     <div class="summoner_info">
                                         <p class="summoner_name">{p?.expand?.player?.name}</p>
-                                        <p class="summoner_champion">{p?.champion}</p>
+                                        <p class="summoner_champion">{handleCodinames(p?.champion as string)}</p>
+                                        {#if p?.expand.player.bot}
+                                            <p class="player_is_bot">BOT</p>
+                                        {/if}
                                     </div>
                                     <!-- <p class="summoner_kda">
                                         <span class="summoner_kda_kills">10</span>
@@ -331,6 +346,7 @@
                                 padding: 4px;
                                 border-radius: 4px;
                                 background: rgb(51, 155, 51);
+                                font-size: 0.8rem;
                             }
 
                             & .team_round_loser {
@@ -338,6 +354,7 @@
                                 padding: 4px;
                                 border-radius: 4px;
                                 background: rgb(155, 51, 51);
+                                font-size: 0.8rem;
                             }
                         }
                     }
@@ -396,6 +413,14 @@
                                     & .summoner_champion {
                                         opacity: .4;
                                         text-transform: uppercase;
+                                    }
+
+                                    & .player_is_bot {
+                                        box-sizing: border-box;
+                                        padding: 4px;
+                                        border-radius: 4px;
+                                        background: rgb(116, 116, 116);
+                                        font-size: 0.8rem;
                                     }
                                 }
 
