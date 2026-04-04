@@ -4,13 +4,14 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-button {
+:is(button, select) {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
     border: none;
     background-color: transparent;
     cursor: pointer;
+    outline: none;
 }
 
 a {
