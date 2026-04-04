@@ -79,3 +79,12 @@ h4 {
         background-color: oklch(1 0 0/0.15);
     }
 }
+
+:is(h1, h2, h3, h4 ,h5, h6)::selection {
+    background-color: var(--color-brand-main);
+    color: var(--color-page-bg);
+}
+
+:is(a, p, span, button, input)::selection {
+    background-color: var(--color-block-stroke-default);
+}
