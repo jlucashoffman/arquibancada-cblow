@@ -8,8 +8,7 @@
 
     const nav_links: LinkObject[] = [
         ["participantes", ""],
-        ["torcidas", ""],
-        ["chaveamento", ""],
+        ["baralho", "cartas"],
         ["histórico de partidas", ""]
     ]
 
@@ -34,7 +33,7 @@
     <div class="content_wrapper">   
         <MenuNavButton />
         <div id="navbar_header">
-        <h1>arquibancada<br/>cblow</h1>
+        <a href="/"><h1>arquibancada<br/>cblow</h1></a>
         <p>2026</p>
         </div>
         
@@ -129,7 +128,15 @@
 
             @media screen and (max-width: 964px) {
                 & :is(#navbar_header, :global(.watch_button)) { position: static; }
-                & #navbar_header { margin-right: auto; }
+                & #navbar_header { 
+                    margin-right: auto; 
+                    position: relative;
+
+                    & p {
+                        left: calc(100% + 16px);
+                        bottom: 0px;
+                    }
+                }
                 & #navbar_link_group { 
                     justify-content: flex-start;
                     position: absolute; 
