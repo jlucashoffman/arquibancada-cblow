@@ -4,7 +4,6 @@
 	//import de arquivos css
 	import "$lib/styles/neoreset.css";
 	import "$lib/styles/reset.css";
-	import "$lib/styles/main.css";
 
 	let { children } = $props();
 
