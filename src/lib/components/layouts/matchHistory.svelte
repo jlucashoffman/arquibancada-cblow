@@ -69,6 +69,18 @@
                             <p class="team_name">{m.teams[1].name}</p>
                         </div>
                     </div>
+                    <div class="teams_score_mobile">
+                        <div class="team_side panel_style">
+                            <p class="team_label">{m.teams[0].label}</p>
+                            <p class="team_name">{m.teams[0].name}</p>
+                            <p class="team_score_points" class:winner={m.teams[0].points > m.teams[1].points}>{m.teams[0].points}</p>
+                        </div>
+                        <div class="team_side panel_style">
+                            <p class="team_label">{m.teams[1].label}</p>
+                            <p class="team_name">{m.teams[1].name}</p>
+                            <p class="team_score_points" class:winner={m.teams[1].points > m.teams[0].points}>{m.teams[1].points}</p>
+                        </div>
+                    </div>
                     <p class="match_type">{m.type}</p>
                     <p class="match_date">{m.date}</p>
                 </button>
@@ -80,7 +92,7 @@
                             <p>partida {r.round}</p>
                             <button class="card_selected panel_style">
                                 <span class="material-symbols-outlined">playing_cards</span>
-                                {r.card.name}
+                                <span>{r.card.name}</span>
                             </button>
                         </div>
                         <div class="match_round_result panel_style">
@@ -155,12 +167,20 @@
         max-width: 728px;
         margin: 0 auto;
 
+        @media screen and (max-width: 600px) {
+            gap: 8px;
+        }
+
         & .match_group_wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 16px;
             width: 100%;
+
+            @media screen and (max-width: 600px) {
+                gap: 8px;
+            }
 
             &.open .match_group_rounds{
                 max-height: 200vh;
@@ -281,6 +301,70 @@
                                 z-index: -1;
                             }
                         }
+                    }
+                }
+
+                & .teams_score_mobile {
+                    display: none;
+                }
+
+                @media screen and (max-width: 600px) {
+                    align-items: flex-start;
+                    background-color: transparent;
+                    gap: 8px;
+
+                    &::before {
+                        display: none;
+                    }
+
+                    & .teams_score { display: none; }
+
+                    & .teams_score_mobile {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                        width: 100%;
+
+                        & .team_side {
+                            display: flex;
+                            align-items: center;
+                            box-sizing: border-box;
+                            gap: 8px;
+                            padding: 8px;
+                            border-radius: 8px;
+                            width: 100%;
+
+                            &:has( .team_score_points.winner) {
+                                border: 1px solid var(--color-brand-stroke);
+                                box-shadow: 0 0 18px var(--color-brand-shadow-effect-main);
+                            }
+
+                            & .team_label {
+                                font-weight: bold;
+                            }
+
+                            & .team_name {
+                                text-align: left;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                opacity: .5;
+                                font-size: 0.85rem;
+                            }
+
+                            & .team_score_points {
+                                margin-left: auto;
+                                margin-right: 8px;
+
+                                &.winner {
+                                    color: var(--color-brand-main);
+                                }
+                            }
+                        }
+                        
+                    }
+                    & .match_date {
+                        opacity: .8;
                     }
                 }
             }
@@ -474,6 +558,43 @@
                                     font-size: 0.85rem;
                                     font-variant-numeric: tabular-nums;
                                 }
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 600px) {
+
+                    & .match_round .match_round_info_header {
+                        flex-direction: column;
+                        align-items: flex-start;
+
+                        & button {
+                            width: 100%;
+                            text-align: left;
+                            
+                            & span:nth-child(2) {
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                                font-size: 0.8em;
+                            }
+                        }
+                    }
+
+                    & .match_round .match_round_result {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 4px;
+                        background-color: transparent;
+
+                        & .match_round_team_points {
+                            flex-direction: row !important;
+                            justify-content: space-between;
+                            width: 100%;
+
+                            & .team_label {
+                                font-size: 1em;
                             }
                         }
                     }
