@@ -19,7 +19,7 @@
 
         if (key === 'participants') return `${basePath}#participants_section`;
         if (key === 'history') return `${basePath}#match_history_section`;
-        return `${basePath}/cartas`;
+        return edition ? `${basePath}/cartas` : '/cartas';
     };
 
     let isShrunk = $state(false)
