@@ -23,21 +23,21 @@
 
 {#snippet hostCard(host:HostPerson)}
     <a class="card_principal panel_style" href={host.livestream} target="_blank">
-        <img src={`assets/pfps/${host.pfp}`} alt={`foto de perfil ${host.name}`}>
+        <img src={`/assets/pfps/${host.pfp}`} alt={`foto de perfil ${host.name}`}>
         <p>{host.name}</p>
     </a>
 {/snippet}
 
 {#snippet presidentCard(president:PresidentPerson)}
     <a class="card_principal panel_style" href={president.livestream} target="_blank">
-        <img src={`assets/pfps/${president.pfp}`} alt={`foto de perfil ${president.name}`}>
+        <img src={`/assets/pfps/${president.pfp}`} alt={`foto de perfil ${president.name}`}>
         <p>{president.name}</p>
     </a>
 {/snippet}
 
 {#snippet playerLabel(player: Pick<IPlayersCollection, "role" | "expand">)}
     <a class="player_label" href={player.expand.person.livestream} target="_blank">
-        <img src={`assets/roles/${player.role}.svg`} alt="">
+        <img src={`/assets/roles/${player.role}.svg`} alt="">
         <p>{player.expand.person.name}</p>
     </a>
 {/snippet}

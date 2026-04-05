@@ -1,4 +1,5 @@
 export const prerender = true;
+export const trailingSlash = 'always';
 
 import { fetchAll, filter } from "$lib/fetchs";
 import { redirect } from "@sveltejs/kit";

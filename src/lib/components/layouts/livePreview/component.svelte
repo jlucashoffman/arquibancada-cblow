@@ -4,7 +4,7 @@
 </script>
 
 <section id="section_hero">
-    <img id="banner_hero" src="assets/banner.png" alt="teste">
+    <img id="banner_hero" src="/assets/banner.png" alt="teste">
     <div class="content_wrapper">
         {#if livestreamObserver.inLive} 
         <div id="livestream_wrapper">

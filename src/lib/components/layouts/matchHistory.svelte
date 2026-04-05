@@ -108,7 +108,7 @@
                             {#each t?.players as p}
                                 <li>
                                     <div class="summoner_images">
-                                        <img class="summoner_role" src={`assets/roles/${p?.role}.svg`} alt="">
+                                        <img class="summoner_role" src={`/assets/roles/${p?.role}.svg`} alt="">
                                         <img class="summoner_champ_pic" src={`https://ddragon.leagueoflegends.com/cdn/${m.patch}.1/img/champion/${p?.champion}.png`} alt="">
                                     </div>
                                     
