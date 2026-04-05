@@ -1,18 +1,9 @@
 <script lang="ts">
     import { gameMaster } from "$lib/database/data.svelte";
     import type { LayoutProps } from "./$types";
-    import Navbar from "$lib/components/layouts/navbar/component.svelte";
     import { progressManager } from "$lib/progress.svelte";
-    import { onMount } from "svelte";
-    import { livestreamObserver } from "$lib/components/layouts/livePreview/logic.svelte";
 
     let { data, children }: LayoutProps = $props();
-
-    onMount(() => {
-        livestreamObserver.checkYoda()
-
-        return () => {livestreamObserver.clearLoop()}
-    })
 
     $effect(() => {
         gameMaster.selectedEdition = data.ed
@@ -21,8 +12,6 @@
     })
 
 </script>
-
-<Navbar/>
 
 <main>
     {@render children?.()}
@@ -33,9 +22,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 128px;
+        gap: 16px;
 
         box-sizing: border-box;
-        padding: 64px 16px;
+        padding: 0px 16px;
     }
 </style>
