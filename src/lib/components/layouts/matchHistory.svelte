@@ -1,5 +1,7 @@
 <script lang="ts">
     import { gameMaster } from "$lib/database/data.svelte";
+    import { progressManager } from "$lib/progress.svelte";
+    import Loading from "../loading.svelte";
 
     let viewMatch = $state("")
 
@@ -36,7 +38,8 @@
 
 </script>
 <section id="match_history_section">
-    <div class="content_wrapper">
+{#if progressManager.dataLoaded}
+<div class="content_wrapper">
         <h2>histórico de partidas</h2>
         {#each gameMaster.matchHistory as m}
             <div 
@@ -134,6 +137,10 @@
             </div>
         {/each}
     </div>
+{:else}
+<Loading />
+{/if}
+    
 </section>
 
 <style>

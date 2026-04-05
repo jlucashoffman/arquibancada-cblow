@@ -1,6 +1,8 @@
 <script lang="ts">
     import { gameMaster } from '$lib/database/data.svelte';
     import type { HostPerson, IPlayersCollection, ITeamsCollection, PresidentPerson } from '$lib/database/interfaces';
+    import { progressManager } from '$lib/progress.svelte';
+    import Loading from '../loading.svelte';
 
     const roleOrder: Record<string, number> = {
         top: 0,
@@ -53,7 +55,8 @@
 {/snippet}
 
 <section id="participants_section">
-    <div class="content_wrapper">
+{#if progressManager.dataLoaded}
+<div class="content_wrapper">
         <h2>participantes</h2>
         <div id="participants_box" class="panel_style">
             <h3>hosts</h3>
@@ -76,6 +79,10 @@
             </div>
         </div>
     </div>
+{:else}
+<Loading />
+{/if}
+    
 </section>
 
 <style>
