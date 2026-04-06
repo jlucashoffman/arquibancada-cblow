@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
     import Element from "$lib/components/element.svelte";
+    import { gameMaster } from "$lib/database/data.svelte";
 </script>
+
 <Element idName="edition_controller">
-    <button id="change_edition" type="button">{`Edição 2026`}</button>
+    <button id="change_edition" type="button">{`${gameMaster.data?.editions[0].edition}`}</button>
 </Element>
 
 <style>
