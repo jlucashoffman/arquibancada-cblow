@@ -4,11 +4,12 @@
     import LoadingSpinner from "../loadingSpinner.svelte";
 
     let edition = $derived(gameMaster.data?.editions[0]?.edition);
+    let interactable = $derived(edition != undefined);
 </script>
 
 <Element idName="edition_controller">
     
-    <button id="change_edition" type="button">
+    <button id="change_edition" type="button" class:interactable>
     {#if edition != undefined}
     {`${edition}`}
     {:else}
@@ -25,6 +26,8 @@
     --border-radius: 8px;
     --border-weight: 1px;
     }
+    
+    & > ._background { background: var(--color-element-interactive-bg); }
 
     width: fit-content;
 
@@ -32,8 +35,11 @@
     top: 32px;
     left: 16px;
 
-    & #change_edition { padding: 8px 16px; } 
+    & #change_edition { 
+    padding: 8px 16px; 
+    pointer-events: none;
+    } 
 
-    & #change_edition._background { background: var(--color-element-interactive-bg); }
+    & #change_edition.interactable { pointer-events: all;}
     }
 </style>
