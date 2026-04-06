@@ -3,6 +3,8 @@
     import type { LayoutProps } from "./$types";
     import { progressManager } from "$lib/progress.svelte";
 
+    import "$lib/styles/arquibancada.css";
+
     let { data, children }: LayoutProps = $props();
 
     $effect(() => {
